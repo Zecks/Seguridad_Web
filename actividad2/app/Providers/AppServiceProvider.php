@@ -19,6 +19,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        \Illuminate\Support\Facades\URL::forceScheme('https');
+        \Illuminate\Support\Facades\Route::redirect('/', '/home');
+        \Illuminate\Support\Facades\Route::redirect('/home', '/dashboard');
+        \Illuminate\Support\Facades\Route::redirect('/dashboard', '/admin/users');
+        \Illuminate\Support\Facades\Route::redirect('/admin/users', '/admin/users');
     }
 }

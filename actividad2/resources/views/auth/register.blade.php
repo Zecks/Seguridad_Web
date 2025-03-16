@@ -10,13 +10,18 @@
             <x-input-error :messages="$errors->get('name')" class="mt-2" />
         </div>
 
+        <!-- Teléfono -->
         <div>
-            <label for="phone">Teléfono</label>
-            <input id="phone" class="block mt-1 w-full" type="text" name="phone" required>
+            <x-input-label for="phone" :value="__('Phone')" />
+            <input id="phone" class="block mt-1 w-full" type="text" name="phone" value="{{ old('phone') }}" required>
+            <x-input-error :messages="$errors->get('phone')" class="mt-2" />
         </div>
+
+        <!-- Dirección -->
         <div>
-            <label for="address">Dirección</label>
-            <input id="address" class="block mt-1 w-full" type="text" name="address" required>
+            <x-input-label for="address" :value="__('Address')" />
+            <input id="address"  class="block mt-1 w-full" type="text" name="address" value="{{ old('address') }}" required>
+            <x-input-error :messages="$errors->get('address')" class="mt-2" />
         </div>
 
         <!-- Email Address -->
