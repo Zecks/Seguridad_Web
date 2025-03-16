@@ -3,6 +3,8 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
     return view('welcome');
@@ -13,12 +15,19 @@ Route::get('/admin', function () {
 })->middleware('admin');
 
 Route::get('/admin/users', function () {
-    $users = \App\Models\User::all();
+    $users = User::all();
     return view('admin.users', compact('users'));
 })->middleware(['auth', 'admin']);
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    $users = [];
+
+    // Verificar si el usuario está autenticado y es un admin para cargar los usuarios
+    if (Auth::check() && Auth::user()->role === 'admin') { // Usa Auth en lugar de auth()
+        $users = User::all();
+    }
+
+    return view('dashboard', compact('users'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {

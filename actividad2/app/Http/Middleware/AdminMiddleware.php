@@ -1,5 +1,7 @@
 <?php
 
+// Ubicación: app/Http/Middleware/AdminMiddleware.php
+
 namespace App\Http\Middleware;
 
 use Closure;
@@ -16,14 +18,14 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-         // Verificar si el usuario está autenticado
+        // Verificar si el usuario está autenticado
         if (!Auth::check()) {
-            return redirect('/login'); // Redirigir a la página de login si no está autenticado
+            return redirect('/login');
         }
 
-        // Verificar si el usuario tiene el rol de administrador
+        // Verificar si el usuario tiene el rol 'admin'
         if (Auth::user()->role !== 'admin') {
-            return redirect('/'); // Redirigir a la página principal si no es administrador
+            return redirect('/')->with('error', 'No tienes permisos de administrador.');
         }
 
         // Permitir el acceso si el usuario es administrador
